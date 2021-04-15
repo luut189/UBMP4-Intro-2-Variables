@@ -50,3 +50,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/UBMP4-Intro-2-Variables.X/build/
+/UBMP4-Intro-2-Variables.X/dist/
