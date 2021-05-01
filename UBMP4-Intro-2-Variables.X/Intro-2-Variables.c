@@ -1,6 +1,6 @@
 /*==============================================================================
  Project: Intro-2-Variables
- Date:    April 15, 2021
+ Date:    April 30, 2021
  
  This example program demonstrates the use of byte (char) constants and
  variables to count button presses and trigger actions when a limit is reached.
@@ -25,8 +25,8 @@
 const unsigned char maxCount = 50;
 
 // Program variable definitions
-unsigned char p1Count = 0;
-bool p1Pressed = false;
+unsigned char SW2Count = 0;
+bool SW2Pressed = false;
 
 int main(void)
 {
@@ -41,7 +41,7 @@ int main(void)
         if(SW2 == 0)
         {
             LED3 = 1;
-            p1Count = p1Count + 1;
+            SW2Count = SW2Count + 1;
         }
         else
         {
@@ -52,10 +52,10 @@ int main(void)
         if(SW2 == 1)
         {
             LED3 = 0;
-            p1Pressed = false;
+            SW2Pressed = false;
         }
         
-        if(p1Count >= maxCount)
+        if(SW2Count >= maxCount)
         {
             LED4 = 1;
         }
@@ -64,7 +64,7 @@ int main(void)
         if(SW3 == 0)
         {
             LED4 = 0;
-            p1Count = 0;
+            SW2Count = 0;
         }
         
         // Add a short delay to the main while loop.
@@ -81,13 +81,13 @@ int main(void)
 
 /* Program Analysis
  * 
- * 1. The 'p1Count' variable is created within RAM as an 8-bit memory location
- *    by the 'unsigned char p1Count = 0;' declaration. What is the the maximum
+ * 1. The 'SW2Count' variable is created within RAM as an 8-bit memory location
+ *    by the 'unsigned char SW2Count = 0;' declaration. What is the the maximum
  *    value an 8-bit variable can store? What are some benefits of using 8-bit
  *    variables in an 8-bit microcontroller?
  * 
  * 2. The constant 'maxCount' is defined using a declaration similar to that
- *    used for the p1Count variable, but with the 'const' prefix added in the
+ *    used for the SW2Count variable, but with the 'const' prefix added in the
  *    declaration. Can you think of some advantages of declaring a constant like
  *    this, using a separate statement above the main code, rather than just
  *    embedding the value of the constant into the code where it is used?
@@ -102,7 +102,7 @@ int main(void)
  * 
  * 4. Modify the second 'if' structure to add the else block, as shown below:
 
-        if(p1Count >= maxCount)
+        if(SW2Count >= maxCount)
         {
             LED4 = 1;
         }
@@ -112,29 +112,29 @@ int main(void)
         }
 
  *    Now, press and hold pushbutton SW2 for at least 10 seconds while watching
- *    LED D4. LED D4 should stay on continuously when the value of p1Count is
+ *    LED D4. LED D4 should stay on continuously when the value of SW2Count is
  *    higher than maxCount. If LED D4 turns off, what can be inferred about the
- *    value of the p1Count variable? Can you explain what happens to the
- *    p1Count variable as the SW2 button is held?
+ *    value of the SW2Count variable? Can you explain what happens to the
+ *    SW2Count variable as the SW2 button is held?
  * 
- * 5. We can set a limit on the p1Count variable by encapsulating its increment
+ * 5. We can set a limit on the SW2Count variable by encapsulating its increment
  *    statement inside a conditional statement. In your program, replace the
- *    line 'p1Count = p1Count + 1;' with the code, below:
+ *    line 'SW2Count = SW2Count + 1;' with the code, below:
  
-            if(p1Count < 255)
+            if(SW2Count < 255)
             {
-                p1Count += 1;
+                SW2Count += 1;
             }
 
  *    This code demonstrates the use of the assignment operator '+=' to shorten
- *    the statement 'p1Count = p1Count + 1;' The same operation is performed,
- *    namely 1 bing added to the current p1Count value, but in a more compact
- *    form. Adding this code, what is the maximum value that p1Count will reach?
- *    How does this affect LED D4 when SW2 is held?
+ *    the statement 'SW2Count = SW2Count + 1;' The same operation is performed,
+ *    namely 1 bing added to the current SW2Count value, but in a more compact
+ *    form. Adding this code, what is the maximum value that SW2Count will
+ *    reach? How does this affect LED D4 when SW2 is held?
  *
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
  *    each cycle through the loop and, if its state is read as pressed, another
- *    count is added to the p1Count variable. Rather than responding to state,
+ *    count is added to the SW2Count variable. Rather than responding to state,
  *    the program needs to be made to respond only to each new press -- in other
  *    words, a *change* of SW2 state, from not pressed to pressed. Doing this
  *    requires the use of another variable to store the prior state of SW2, so
@@ -143,52 +143,85 @@ int main(void)
  *    with the following two if conditions:
 
         // Count new SW2 button presses
-        if(SW2 == 0 && p1Pressed == false)
+        if(SW2 == 0 && SW2Pressed == false)
         {
             LED3 = 1;
-            if(p1Count < 255)
+            if(SW2Count < 255)
             {
-                p1Count = p1Count + 1;
+                SW2Count = SW2Count + 1;
             }
-            p1Pressed = true;
+            SW2Pressed = true;
         }
 
         // Clear pressed state if released
         if(SW2 == 1)
         {
             LED3 = 0;
-            p1Pressed = false;
+            SW2Pressed = false;
         }
         
- *    These two if conditions make use of the Boolean p1Pressed variable to
+ *    These two if conditions make use of the Boolean SW2Pressed variable to
  *    store the current state of SW2 for the next cycle of the main while loop.
  *    Boolean variables can store 0/false or 1/true, interchangeably. The first
  *    if condition, above, compares the current SW2 state with the previously
- *    stored p1Pressed variable so that a new count is only added when the SW2
- *    button is pressed and p1Pressed is false. At the end of this if structure,
- *    p1Pressed is set to true. The next if structure resets p1Pressed to false
- *    whenever the button is released. Try the code to make sure it works.
+ *    stored SW2Pressed variable so that a new count is only added when the SW2
+ *    button is pressed and SW2Pressed is false. At the end of the if structure,
+ *    SW2Pressed is set to true. The next if structure resets SW2Pressed to be
+ *    false whenever the button is released. Try the code to make sure it works.
  * 
  *    The conditional statement in the first if condition can also be written:
 
-        if(SW2 == 0 && !p1Pressed)
+        if(SW2 == 0 && !SW2Pressed)
 
- *    The '!p1Pressed' expression is read as 'not p1Pressed' and is equivalent
- *    to false. Using just the variable name (eg. p1Pressed) in a condition is
- *    equivalent to true.
+ *    The '!SW2Pressed' expression is read as 'not SW2Pressed' and is equivalent
+ *    to false. Similarly, using the variable name by itself (eg. SW2Pressed)
+ *    in a condition is equivalent to true.
+ * 
+ * 7. A pushbutton's logic state can also be defined as a word in a similar way
+ *    to a variable (eg. the way SW2Pressed represents 1 or 0, or true or false)
+ *    which can help to make the code more readable. Add the following lines to
+ *    the 'Program constant definitions' section at the top of the code:
+ 
+ #define pressed 0
+ #define notPressed 1
+
+ *    Now, instead of comparing the state of the button to 0 or 1, the button
+ *    input can be compared with the named definition for 0 or 1, making the
+ *    program more readable at the expense of hiding the actual switch value in
+ *    the definition rather than making it obvious in the if structure. Try it
+ *    in your code, and modify the SW3 reset button to work the same way.
+ 
+        // Count new SW2 button presses
+        if(SW2 == pressed && SW2Pressed == false)
+        {
+            LED3 = 1;
+            if(SW2Count < 255)
+            {
+                SW2Count = SW2Count + 1;
+            }
+            SW2Pressed = true;
+        }
+
+        // Clear pressed state if released
+        if(SW2 == notPressed)
+        {
+            LED3 = 0;
+            SW2Pressed = false;
+        }
+        
  * 
  * Programming Activities
  * 
  * 1. Can you make a two-player rapid-clicker style game using this program as 
- *    a starting point? Duplicate p1Count and p1Pressed to create p2Count and
- *    p2Pressed variables. Then, duplicate the required if condition structures
- *    and change the variable names to the second player's set. Use SW5 for the 
- *    second player's pushbutton so that the two players can face each other
- *    from across the board. LED D4 can still light if player 1 is the first to
- *    reach the maxCount. To be able to tell which player wins, have the game
- *    light LED D5 if player 2 is the first one to reach maxCount. Use a logical
- *    condition statement to reset the game by clearing the count and turning
- *    off the LEDs if either SW3 or SW4 is pressed.
+ *    a starting point? Let's use SW5 for the second player's pushbutton so that
+ *    the two players can face each other from across the circuit board.
+ *    Duplicate SW2Count and SW2Pressed to create SW5Count and SW5Pressed
+ *    variables. Then, duplicate the required if condition structures and modify
+ *    the variable names to represent the second player. LED D4 can still light
+ *    if player 1 is the first to reach maxCount. Use LED D5 to show that the
+ *    second palyer wins. Use a logical condition statement to reset the game
+ *    by clearing the count and turning off the LEDs if either SW3 or SW4 is
+ *    pressed.
  * 
  * 2. Use your knowledge of Boolean variables and logical conditions to simulate
  *    a toggle button. Each new press of the toggle button will 'toggle' an LED
@@ -197,21 +230,21 @@ int main(void)
  * 
  * 3. Do your pushbuttons bounce? Switch bounce is the term that describes
  *    switch contacts repeatedly closing and opening before settling in their
- *    final (usually closed) state. Switch bounce in your room light is not a
- *    big concern, but can be an issue in the toggle button because the speed of
- *    a microcontroller lets it see each bounce as a separate event. Use a 
- *    variable to count the number of times a pushbutton is pressed and display
- *    the count on the LEDs. Use a separate pushbutton to reset the count and 
- *    turn off the LEDs so that the test can be repeated. To see if your
- *    switches bounce, try pressing them at various speeds and using different
- *    amounts of force.
+ *    final (usually closed) state. Switch bounce in your room light switch is
+ *    not a big concern, but switch bounce can be an issue in a toggle button
+ *    because the speed of a microcontroller lets it see each bounce as a new,
+ *    separate event. Use a variable to count the number of times a pushbutton
+ *    is pressed and display the count on the LEDs. Use a separate pushbutton
+ *    to reset the count and turn off the LEDs so that the test can be repeated.
+ *    To determine if your switches bounce, try pressing them at various speeds
+ *    and using different amounts of force.
  * 
  * 4. A multi-function button can be used to enable one action when pressed, and
  *    a second or alternate action when held. A variable that counts loop cycles
  *    can be used to determine how long a button is held (just like the first
- *    program did, by poor design, before it was modified). Make a multifunction
- *    button that lights one LED when a button is pressed, and a second LED
- *    after the button is held for more that one second.
+ *    program did unitentionally, by its design, before it was modified). Make
+ *    a multifunction button that lights one LED when a button is pressed, and
+ *    lights a second LED after the button is held for more that one second.
  * 
  * 5. Did your pushbuttons bounce? Think of a technique similar to the multi-
  *    function button that could be implemented to ignore switch bounce in
