@@ -1,12 +1,12 @@
 /*==============================================================================
  Project: Intro-2-Variables
- Date:    April 30, 2021
+ Date:    May 16, 2021
  
  This example program demonstrates the use of byte (char) constants and
  variables to count button presses and trigger actions when a limit is reached.
   
  Additional program analysis and programming activities demonstrate using bit
- (bool, or Boolean) variables to store state for operations such as preventing 
+ (Boolean, or bool) variables to store state for operations such as preventing 
  multiple counting of a singe button press during successive program loops.
  Additional activities include the creation of a two-player rapid-clicker game,
  simulating a real-world toggle button, and counting switch contact bounce.
@@ -18,8 +18,8 @@
 
 #include    "UBMP4.h"           // Include UBMP4 constants and functions
 
-// TODO Set linker ROM ranges to 'default,-0-FFF' under "Memory model" pull-down.
-// TODO Set linker code offset to '1000' under "Additional options" pull-down.
+// TODO Set linker ROM ranges to 'default,-0-7FF' under "Memory model" pull-down.
+// TODO Set linker code offset to '800' under "Additional options" pull-down.
 
 // Program constant definitions
 const unsigned char maxCount = 50;
@@ -70,8 +70,9 @@ int main(void)
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
-        // Connect to USB and press and release SW1 to start the USB bootloader.
-        // After LED D1 flashes, UBMP4 will appear as USB drive 'PIC16F145X'.
+        // Connect UBMP4 to USB and press and hold SW1 to start the bootloader.
+        // After LED D1 turns off, release SW1. UBMP4 will appear as USB drive
+        // 'PIC16F1459' on your device. Drag and drop .hex files to PIC16F1459.
         if(SW1 == 0)
         {
             asm("reset");
@@ -82,15 +83,16 @@ int main(void)
 /* Program Analysis
  * 
  * 1. The 'SW2Count' variable is created within RAM as an 8-bit memory location
- *    by the 'unsigned char SW2Count = 0;' declaration. What is the the maximum
- *    value an 8-bit variable can store? What are some benefits of using 8-bit
- *    variables in an 8-bit microcontroller?
+ *    by the declaration: 'unsigned char SW2Count = 0;'
+ *    What is the the maximum value an 8-bit variable can store?
+ *    What are some benefits and drawbacks of using 8-bit variables in an 8-bit
+ *    microcontroller?
  * 
  * 2. The constant 'maxCount' is defined using a declaration similar to that
  *    used for the SW2Count variable, but with the 'const' prefix added in the
  *    declaration. Can you think of some advantages of declaring a constant like
  *    this, using a separate statement above the main code, rather than just
- *    embedding the value of the constant into the code where it is used?
+ *    embedding the value of the constant where it is needed in the code?
  * 
  * 3. This program should light LED D3 every time SW2 is pressed, and light
  *    LED D4 once the count reaches 50. Try it, and count how many times you
@@ -128,7 +130,7 @@ int main(void)
 
  *    This code demonstrates the use of the assignment operator '+=' to shorten
  *    the statement 'SW2Count = SW2Count + 1;' The same operation is performed,
- *    namely 1 bing added to the current SW2Count value, but in a more compact
+ *    namely 1 is added to the current SW2Count value, but in a more compact
  *    form. Adding this code, what is the maximum value that SW2Count will
  *    reach? How does this affect LED D4 when SW2 is held?
  *
@@ -174,8 +176,8 @@ int main(void)
         if(SW2 == 0 && !SW2Pressed)
 
  *    The '!SW2Pressed' expression is read as 'not SW2Pressed' and is equivalent
- *    to false. Similarly, using the variable name by itself (eg. SW2Pressed)
- *    in a condition is equivalent to true.
+ *    to SW2Pressed being false. Similarly, using the variable name by itself
+ *    (eg. SW2Pressed) in a condition is equivalent to SW2Pressed being true.
  * 
  * 7. A pushbutton's logic state can also be defined as a word in a similar way
  *    to a variable (eg. the way SW2Pressed represents 1 or 0, or true or false)
@@ -214,7 +216,7 @@ int main(void)
  * 
  * 1. Can you make a two-player rapid-clicker style game using this program as 
  *    a starting point? Let's use SW5 for the second player's pushbutton so that
- *    the two players can face each other from across the circuit board.
+ *    the two players can face each other from across the UBMP4 circuit board.
  *    Duplicate SW2Count and SW2Pressed to create SW5Count and SW5Pressed
  *    variables. Then, duplicate the required if condition structures and modify
  *    the variable names to represent the second player. LED D4 can still light
