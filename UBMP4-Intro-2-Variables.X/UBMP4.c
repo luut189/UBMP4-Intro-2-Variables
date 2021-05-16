@@ -1,6 +1,6 @@
 /*==============================================================================
  File: UBMP4.c
- Date: April 15, 2021
+ Date: May 16, 2021
  
  UBMP4 (PIC16F1459) hardware initialization functions
  
@@ -33,10 +33,12 @@ void UBMP4_config(void)
     LATA = 0b00000000;          // Clear Port A latches before configuring PORTA
     TRISA = 0b00001111;         // Set RUNLED and Beeper pins as outputs
     ANSELA = 0b00000000;        // Make all Port A pins digital
+    WPUA = 0b00001000;          // Enable weak pull-up on SW1 input only
 
     LATB = 0b00000000;          // Clear Port B latches before configuring PORTB
     TRISB = 0b11110000;         // Enable pushbutton pins as inputs (SW2-SW5)
     ANSELB = 0b00000000;        // Make all Port B pins digital
+    WPUB = 0b11110000;          // Enable weak pull-ups on pushbutton inputs
 
     LATC = 0b00000000;          // Clear Port C latches before configuring PORTC
     TRISC = 0b00001111;         // Set LED pins as outputs, H1-H4 pins as inputs
