@@ -1,22 +1,22 @@
 /*==============================================================================
  File: UBMP4.h
- Date: April 15, 2021
+ Date: May 16, 2021
  
  UBMP4 (PIC16F1459) symbolic constant definitions
  
  I/O pin definitions section:
- Inputs read port registers (eg. RC0), and outputs write to the port latches
+ Inputs read port registers (eg. RC0), and outputs write to port latches
  (eg. LATC0). Use this file to create unique symbolic names for each input
  and output device connected to the I/O pins of the PIC16F1459 in the UBMP4.
  
  ADC input channel definitions section:
- Available ADC channels on the UMBP4 include definitions representing their
- ADCON0 channel select (CHS) bits.
+ Definitions representing ADCON0 channel select (CHS) bit for the ADC channels
+ available on the UMBP4.
  
  Function prototypes section:
  Functions in the UBMP4.c file need to be defined before use in the main user
- program. This header file includes the function prototypes for the functions
- in the UBMP4.c file.
+ program. This header file contains the function prototype definitions for the
+ functions in the UBMP4.c file.
 ==============================================================================*/
 
 // TODO - Add/modify user constant definitions for UBMP hardware here.
@@ -124,7 +124,7 @@ void ADC_config(void);
  * Enable ADC and switch input mux to specified channel based on the channel
  * constants defined above.
  * 
- * Example usage: ADC_enable_channel(ANTIM);
+ * Example usage: ADC_select_channel(ANTIM);
  */
 void ADC_select_channel(unsigned char);
 
@@ -140,8 +140,8 @@ unsigned char ADC_read(void);
 /**
  * Function: unsigned char ADC_read_channel(unsigned char channel)
  * 
- * Enable ADC and return an 8-bit conversion result from the channel specified
- * by channel constants defined above.
+ * Enable ADC, switch to the channel specified by channel constants defined
+ * above, and return the 8-bit conversion result.
  * 
  * Example usage: light_level = ADC_read_channel(ANQ1);
  */
