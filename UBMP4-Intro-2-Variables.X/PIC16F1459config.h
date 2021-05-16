@@ -1,6 +1,6 @@
 /*==============================================================================
  File: PIC16F1459config.h
- Date: April 18, 2021
+ Date: May 16, 2021
   
  UBMP4 (PIC16F1459) configuration bit settings
 
@@ -36,7 +36,7 @@
 #pragma config PLLMULT = 3x     // PLL Multipler Selection Bit (3x Output Frequency Selected)
 #pragma config PLLEN = ENABLED  // PLL Enable Bit (3x or 4x PLL Enabled)
 #pragma config STVREN = ON      // Stack Overflow/Underflow Reset Enable (Stack Overflow or Underflow will cause a Reset)
-#pragma config BORV = LO        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), low trip point selected.)
+#pragma config BORV = HI        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), high trip point selected.)
 #pragma config LPBOR = OFF      // Low-Power Brown Out Reset (Low-Power BOR is disabled)
 #pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
 
