@@ -48,13 +48,6 @@ int main(void)
             LED3 = 0;
         }
         
-        // Clear pressed state if released
-        if(SW2 == 1)
-        {
-            LED3 = 0;
-            SW2Pressed = false;
-        }
-        
         if(SW2Count >= maxCount)
         {
             LED4 = 1;
