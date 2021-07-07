@@ -63,12 +63,10 @@ int main(void)
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
-        // Connect UBMP4 to USB and press and hold SW1 to start the bootloader.
-        // After LED D1 turns off, release SW1. UBMP4 will appear as USB drive
-        // 'PIC16F1459' on your device. Drag and drop .hex files to PIC16F1459.
+        // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
         {
-            asm("reset");
+            RESET();
         }
     }
 }
@@ -122,16 +120,16 @@ int main(void)
             }
 
  *    This code demonstrates the use of the assignment operator '+=' to shorten
- *    the statement 'SW2Count = SW2Count + 1;' The same operation is performed,
- *    namely 1 is added to the current SW2Count value, but in a more compact
- *    form. Adding this code, what is the maximum value that SW2Count will
- *    reach? How does this affect LED D4 when SW2 is held?
+ *    the statement 'SW2Count = SW2Count + 1;' The same operation of adding one
+ *    to the current SW2COunt value is performed, but in a more compact form.
+ *    Adding this code, what is the maximum value that the SW2Count variable
+ *    will reach? How does this affect the operation of LED D4 when SW2 is held?
  *
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
- *    each cycle through the loop and, if its state is read as pressed, another
+ *    in each cycle of the loop and if its state is read as pressed, another
  *    count is added to the SW2Count variable. Rather than responding to state,
  *    the program needs to be made to respond only to each new press -- in other
- *    words, a *change* of SW2 state, from not pressed to pressed. Doing this
+ *    words, a *change* of SW2 state, from not-pressed to pressed. Doing this
  *    requires the use of another variable to store the prior state of SW2, so
  *    that its current state can be evaluated as being the same, or different
  *    from its state in the previous loop. Replace the initial if-else condition 
@@ -141,11 +139,11 @@ int main(void)
         if(SW2 == 0 && SW2Pressed == false)
         {
             LED3 = 1;
+            SW2Pressed = true;
             if(SW2Count < 255)
             {
                 SW2Count = SW2Count + 1;
             }
-            SW2Pressed = true;
         }
 
         // Clear pressed state if released
@@ -160,9 +158,10 @@ int main(void)
  *    Boolean variables can store 0/false or 1/true, interchangeably. The first
  *    if condition, above, compares the current SW2 state with the previously
  *    stored SW2Pressed variable so that a new count is only added when the SW2
- *    button is pressed and SW2Pressed is false. At the end of the if structure,
- *    SW2Pressed is set to true. The next if structure resets SW2Pressed to be
- *    false whenever the button is released. Try the code to make sure it works.
+ *    button is pressed and SW2Pressed is false. In the if structure, SW2Pressed
+ *    is set to true before a count is added. The following if structure resets
+ *    SW2Pressed to false when the button is released. Try the code to verify
+ *    that it works.
  * 
  *    The conditional statement in the first if condition can also be written:
 
@@ -183,8 +182,9 @@ int main(void)
  *    Now, instead of comparing the state of the button to 0 or 1, the button
  *    input can be compared with the named definition for 0 or 1, making the
  *    program more readable at the expense of hiding the actual switch value in
- *    the definition rather than making it obvious in the if structure. Try it
- *    in your code, and modify the SW3 reset button to work the same way.
+ *    the definition statement instead of making it obvious in the if structure.
+ *    Try it in your code, and modify the SW3 reset button to work with the same
+ *    pressed adn notPressed definitions.
  
         // Count new SW2 button presses
         if(SW2 == pressed && SW2Pressed == false)
@@ -213,7 +213,7 @@ int main(void)
  *    Duplicate SW2Count and SW2Pressed to create SW5Count and SW5Pressed
  *    variables. Then, duplicate the required if condition structures and modify
  *    the variable names to represent the second player. LED D4 can still light
- *    if player 1 is the first to reach maxCount. Use LED D5 to show that the
+ *    if player 1 is the first to reach maxCount. Use LED D5 to show if the
  *    second palyer wins. Use a logical condition statement to reset the game
  *    by clearing the count and turning off the LEDs if either SW3 or SW4 is
  *    pressed.
@@ -223,9 +223,16 @@ int main(void)
  *    to its opposite state. (Toggle buttons are commonly used as push-on, 
  *    push-off power buttons in digital devices.)
  * 
- * 3. Do your pushbuttons bounce? Switch bounce is the term that describes
+ * 3. A multi-function button can be used to enable one action when pressed, and
+ *    a second or alternate action when held. A variable that counts loop cycles
+ *    can be used to determine how long a button is held (just as the first
+ *    program unitentionally did, because of the loop structure). Make a
+ *    multifunction button that lights one LED when a button is pressed, and
+ *    lights a second LED after the button is held for more that one second.
+ * 
+ * 4. Do your pushbuttons bounce? Switch bounce is the term that describes
  *    switch contacts repeatedly closing and opening before settling in their
- *    final (usually closed) state. Switch bounce in your room light switch is
+ *    final (usually closed) state. Switch bounce in a room's light switch is
  *    not a big concern, but switch bounce can be an issue in a toggle button
  *    because the speed of a microcontroller lets it see each bounce as a new,
  *    separate event. Use a variable to count the number of times a pushbutton
@@ -234,14 +241,8 @@ int main(void)
  *    To determine if your switches bounce, try pressing them at various speeds
  *    and using different amounts of force.
  * 
- * 4. A multi-function button can be used to enable one action when pressed, and
- *    a second or alternate action when held. A variable that counts loop cycles
- *    can be used to determine how long a button is held (just like the first
- *    program did unitentionally, by its design, before it was modified). Make
- *    a multifunction button that lights one LED when a button is pressed, and
- *    lights a second LED after the button is held for more that one second.
- * 
- * 5. Did your pushbuttons bounce? Think of a technique similar to the multi-
- *    function button that could be implemented to ignore switch bounce in
- *    your program.
+ * 5. Did your pushbuttons bounce? Can you think of a technique similar to the
+ *    multi-function button that could be implemented to make your program
+ *    ignore switch bounces. Multiple switch activations within a 50ms time span
+ *    might indicate switch bounce and can be safely ignored.
  */
