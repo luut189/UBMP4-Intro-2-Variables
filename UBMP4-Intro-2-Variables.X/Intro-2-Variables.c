@@ -105,8 +105,8 @@ int main(void)
         }
 
  *    Now, press and hold pushbutton SW2 for at least 10 seconds while watching
- *    LED D4. LED D4 should stay on continuously when the value of SW2Count is
- *    higher than maxCount. If LED D4 turns off, what can be inferred about the
+ *    LED D4. LED D4 should stay on continuously while the value of SW2Count is
+ *    higher than maxCount. If LED D4 turns off, what can you infer about the
  *    value of the SW2Count variable? Can you explain what happens to the
  *    SW2Count variable as the SW2 button is held?
  * 
@@ -120,10 +120,10 @@ int main(void)
             }
 
  *    This code demonstrates the use of the assignment operator '+=' to shorten
- *    the statement 'SW2Count = SW2Count + 1;' The same operation of adding one
- *    to the current SW2COunt value is performed, but in a more compact form.
- *    Adding this code, what is the maximum value that the SW2Count variable
- *    will reach? How does this affect the operation of LED D4 when SW2 is held?
+ *    the statement 'SW2Count = SW2Count + 1;' The same operation is performed,
+ *    but in a more compact form. After adding this code, what is the maximum
+ *    value that the SW2Count variable will reach? How does this affect the
+ *    operation of LED D4 when SW2 is held?
  *
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
  *    in each cycle of the loop and if its state is read as pressed, another
