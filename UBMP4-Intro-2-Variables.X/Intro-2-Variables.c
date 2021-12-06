@@ -25,8 +25,8 @@
 const unsigned char maxCount = 50;
 
 // Program variable definitions
-unsigned char SW2Count = 0;
 bool SW2Pressed = false;
+unsigned char count = 0;
 
 int main(void)
 {
@@ -37,29 +37,81 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-        // Count SW2 button presses
-        if(SW2 == 0)
-        {
+       /*
+        if(SW2 == 0 && !SW2Pressed) {
+            SW2Pressed = true;
             LED3 = 1;
-            SW2Count = SW2Count + 1;
-        }
-        else
-        {
+            SW2Count++;
+        } else {
             LED3 = 0;
+            SW2Pressed = false;
+        }
+
+        if(SW5 == 0 && !SW5Pressed) {
+            SW5Pressed = true;
+            LED6 = 1;
+            SW5Count++;
+        } else {
+            LED6 = 0;
+            SW5Pressed = false;
+        }
+
+        if(SW2Count >= maxCount) {
+            LED4 = 1;
+        } else if(SW5Count >= maxCount) {
+            LED5 = 1;
+        }
+
+        if(SW3 == 0 || SW4 == 0) {
+            LED3 = 0;
+            LED4 = 0;
+            LED5 = 0;
+            LED6 = 0;
+            SW2Count = 0;
+            SW5Count = 0;
+        }
+        */
+        
+        /*
+        if(SW2 == 0 && !SW2Pressed) {
+            LED3 = 1;
+            SW2Pressed = true;
+        } else if(SW2 == 0 && SW2Pressed) {
+            LED3 = 0;
+            SW2Pressed = false;
+        }
+        */
+
+        /*
+        if(SW2 == 0) {
+            LED3 = 1;
+            __delay_ms(1000);
+            count++;
         }
         
-        if(SW2Count >= maxCount)
-        {
+        if(count > 5) {
+            LED3 = 0;
             LED4 = 1;
         }
-        
-        // Reset count and turn off LED D4
-        if(SW3 == 0)
-        {
+
+        if(SW3 == 0) {
             LED4 = 0;
-            SW2Count = 0;
+            LED3 = 0;
+            count = 0;
+        }
+        */
+
+        if(!SW2Pressed && SW2 == 0) {
+            SW2Pressed = true;
+            LED2 = !LED2;
+            __delay_ms(50);
         }
         
+        if(SW2Pressed && SW2 == 1) {
+            SW2Pressed = false;
+            __delay_ms(50);
+        }
+
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
@@ -95,6 +147,9 @@ int main(void)
  * 
  *    Did your count reach 50? Can you describe what the program is doing?
  *    (Hint: try pressing and releasing the button at different rates of speed.)
+ *    The number of times that you have to press until LED D4 turns on are different with
+ *    different rates of speed. Because the program increase the count by one every time the
+ *    code executed, and the SW2 is pressed.
  * 
  * 4. Modify the second 'if' structure to add the else block, as shown below:
 
@@ -112,6 +167,8 @@ int main(void)
  *    higher than maxCount. If LED D4 turns off, what can you infer about the
  *    value of the SW2Count variable? Can you explain what happens to the
  *    SW2Count variable as the SW2 button is held?
+ *    The SW2Count variable is less than the maxCount variable if LED D4 turns off.
+ *    As the SW2 button is held, the SW2Count is continuously increased.
  * 
  * 5. We can set a limit on the SW2Count variable by encapsulating its increment
  *    statement inside a conditional statement. In your program, replace the
@@ -127,6 +184,8 @@ int main(void)
  *    but in a more compact form. After adding this code, what is the maximum
  *    value that the SW2Count variable will reach? How does this affect the
  *    operation of LED D4 when SW2 is held?
+ *    The maximum value that SW2Count can reach is 254.
+ *    It doesn't seem to affect the operation of LED D4 when SW2 is held.
  *
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
  *    in each cycle of the loop and if its state is read as pressed, another
@@ -220,11 +279,13 @@ int main(void)
  *    second palyer wins. Use a logical condition statement to reset the game
  *    by clearing the count and turning off the LEDs if either SW3 or SW4 is
  *    pressed.
+ *    Done
  * 
  * 2. Use your knowledge of Boolean variables and logical conditions to simulate
  *    a toggle button. Each new press of the toggle button will 'toggle' an LED
  *    to its opposite state. (Toggle buttons are commonly used as push-on, 
  *    push-off power buttons in digital devices.)
+ *    Done
  * 
  * 3. A multi-function button can be used to enable one action when pressed, and
  *    a second or alternate action when held. A variable that counts loop cycles
@@ -232,6 +293,7 @@ int main(void)
  *    program unitentionally did, because of the loop structure). Make a
  *    multifunction button that lights one LED when a button is pressed, and
  *    lights a second LED after the button is held for more that one second.
+ *    Done
  * 
  * 4. Do your pushbuttons bounce? Switch bounce is the term that describes
  *    switch contacts repeatedly closing and opening before settling in their
@@ -243,9 +305,11 @@ int main(void)
  *    to reset the count and turn off the LEDs so that the test can be repeated.
  *    To determine if your switches bounce, try pressing them at various speeds
  *    and using different amounts of force.
+ *    They seem to bounce.
  * 
  * 5. Did your pushbuttons bounce? Can you think of a technique similar to the
  *    multi-function button that could be implemented to make your program
  *    ignore switch bounces. Multiple switch activations within a 50ms time span
  *    might indicate switch bounce and can be safely ignored.
+ *    We can prevent that by adding a delay, I guess.
  */
