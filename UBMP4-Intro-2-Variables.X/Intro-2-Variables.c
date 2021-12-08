@@ -17,6 +17,7 @@
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
 
 #include    "UBMP4.h"           // Include UBMP4 constants and functions
+#include    "Throne.h"
 
 // TODO Set linker ROM ranges to 'default,-0-7FF' under "Memory model" pull-down.
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
@@ -101,15 +102,25 @@ int main(void)
         }
         */
 
-        if(!SW2Pressed && SW2 == 0) {
-            SW2Pressed = true;
-            LED2 = !LED2;
-            __delay_ms(50);
-        }
+        // if(!SW2Pressed && SW2 == 0) {
+        //     SW2Pressed = true;
+        //     LED2 = !LED2;
+        //     __delay_ms(50);
+        // }
         
-        if(SW2Pressed && SW2 == 1) {
-            SW2Pressed = false;
-            __delay_ms(50);
+        // if(SW2Pressed && SW2 == 1) {
+        //     SW2Pressed = false;
+        //     __delay_ms(50);
+        // }
+
+        int jingle_bell[15] = {ND4, B4, A4, G4, ND4,
+                               ND4, B4, A4, G4, E4,
+                               E4, C5, B4, A4, F4};
+
+        if(BUTTON_PRESSED(3)) {
+            for(char i = 0; i < 15; i++) {
+                NOTE_PLAYER(jingle_bell[i], 255);
+            }
         }
 
         // Add a short delay to the main while loop.
