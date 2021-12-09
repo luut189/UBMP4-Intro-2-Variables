@@ -113,18 +113,55 @@ int main(void)
         //     __delay_ms(50);
         // }
 
-        int jingle_bell[15] = {ND4, B4, A4, G4, ND4,
+        int jingle_bell[20] = {ND4, B4, A4, G4, ND4,
                                ND4, B4, A4, G4, E4,
-                               E4, C5, B4, A4, F4};
+                               E4, C5, B4, A4, F4,
+                               D5, D5, C5, A4, B4};
+        
+        int jingle_bell_1[24] = {ND4, B4, A4, G4, ND4,
+                                 ND4, B4, A4, G4, E4,
+                                 E4, C5, B4, A4, D5, D5, D5, D5,
+                                 E5, D5, C5, A4, G4, D5};
+
+        int jingle_bell_2[6] = {B4, B4, B4, B4, B4, B4};
+
+        int jingle_bell_3[5] = {B4, D5, G4, A4, B4};
 
         if(BUTTON_PRESSED(3)) {
-            for(char i = 0; i < 15; i++) {
-                NOTE_PLAYER(jingle_bell[i], 255);
+            for(char i = 0; i < 20; i++) {
+                if(i < 4 || (i > 4 && i < 9) || (i > 9 && i < 14) || (i > 14 && i < 19)) NOTE_PLAYER(jingle_bell[i], 250);
+                else if(i == 4 || i == 9 || i == 14 || i == 19) NOTE_PLAYER(jingle_bell[i], 350);
+            }
+            __delay_ms(200);
+            for(char i = 0; i < 25; i++) {
+                if(i < 4 || (i > 4 && i < 9) || (i >= 10 && i <= 13) || (i >= 18 && i <= 21)) NOTE_PLAYER(jingle_bell_1[i], 250);
+                else if(i == 4 || i == 9 || i == 21 || i == 22) NOTE_PLAYER(jingle_bell_1[i], 350);
+                else if(i >= 14 && i <= 17) {
+                    NOTE_PLAYER(jingle_bell_1[i], 250);
+                    __delay_ms(20);
+                }
+            }
+            __delay_ms(200);
+            NOTE_PLAYER(jingle_bell_2[0], 250);
+            __delay_ms(10);
+            NOTE_PLAYER(jingle_bell_2[1], 250);
+            __delay_ms(30);
+
+            NOTE_PLAYER(jingle_bell_2[2], 350);
+            __delay_ms(50);
+
+            NOTE_PLAYER(jingle_bell_2[3], 250);
+            __delay_ms(10);
+            NOTE_PLAYER(jingle_bell_2[4], 250);
+            __delay_ms(30);
+            NOTE_PLAYER(jingle_bell_2[5], 350);
+            for(char i = 0; i < 5; i++) {
+                if(i < 4) NOTE_PLAYER(jingle_bell_3[i], 250);
+                else if(i == 4) NOTE_PLAYER(jingle_bell_3[i], 350);
             }
         }
 
         // Add a short delay to the main while loop.
-        __delay_ms(10);
         
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
