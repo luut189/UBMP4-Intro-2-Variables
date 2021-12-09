@@ -8,8 +8,6 @@
 void NOTE_PLAYER(long duration, int length) {
     for(int i = length; i != 0; i--) {
 		BEEPER = !BEEPER;
-		for(int j = duration; j != 0; j--) {
-			__delay_us(0.01);
-		}
+		for(int j = duration; j != 0; j--);
 	}
 }
