@@ -1,4 +1,5 @@
 #define BUTTON_PRESSED(n)   SW##n == 0
+#define BUTTON_RELEASED(n)  SW##n != 0
 #define LED_ON(n)           LED##n = 1
 #define LED_OFF(n)          LED##n = 0
 
