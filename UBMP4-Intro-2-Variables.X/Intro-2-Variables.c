@@ -47,14 +47,14 @@ int jingle_bell_3[19] = {B4, D5, G4, A4, B4,
 
 int jingle_bell_4[5] = {D5, D5, C5, A4, G4};
 
-void JingleBell(char loop) {
-    for(char c = 0; c < loop; c++) {
-        for(char i = 0; i < 20; i++) {
+void JingleBell(unsigned char loop) {
+    for(unsigned char c = loop; c != 0; c--) {
+        for(unsigned char i = 0; i < 20; i++) {
             if(i < 4 || (i > 4 && i < 9) || (i > 9 && i < 14) || (i > 14 && i < 19)) NOTE_PLAYER(jingle_bell[i], 250);
             else if(i == 4 || i == 9 || i == 14 || i == 19) NOTE_PLAYER(jingle_bell[i], 350);
         }
         __delay_ms(200);
-        for(char i = 0; i < 25; i++) {
+        for(unsigned char i = 0; i < 25; i++) {
             if(i < 4 || (i > 4 && i < 9) || (i >= 10 && i <= 13) || (i >= 18 && i <= 21)) NOTE_PLAYER(jingle_bell_1[i], 250);
             else if(i == 4 || i == 9 || i == 21 || i == 22) NOTE_PLAYER(jingle_bell_1[i], 350);
             else if(i >= 14 && i <= 17) {
@@ -75,7 +75,7 @@ void JingleBell(char loop) {
         NOTE_PLAYER(jingle_bell_2[4], 250);
         __delay_ms(30);
         NOTE_PLAYER(jingle_bell_2[5], 350);
-        for(char i = 0; i < 19; i++) {
+        for(unsigned char i = 0; i < 19; i++) {
             if(i < 4) NOTE_PLAYER(jingle_bell_3[i], 250);
             else if(i == 4) NOTE_PLAYER(jingle_bell_3[i], 350);
             else if(i > 4 && i < 9) {
@@ -107,7 +107,7 @@ void JingleBell(char loop) {
         NOTE_PLAYER(jingle_bell_2[4], 250);
         __delay_ms(30);
         NOTE_PLAYER(jingle_bell_2[5], 350);
-        for(char i = 0; i < 13; i++) {
+        for(unsigned char i = 0; i < 13; i++) {
             if(i < 4) NOTE_PLAYER(jingle_bell_3[i], 250);
             else if(i == 4) NOTE_PLAYER(jingle_bell_3[i], 350);
             else if(i > 4 && i < 9) {
@@ -118,7 +118,7 @@ void JingleBell(char loop) {
                 __delay_ms(20);
             }
         }
-        for(char i = 0; i < 5; i++) {
+        for(unsigned char i = 0; i < 5; i++) {
             if(i < 2) {
                 NOTE_PLAYER(jingle_bell_4[i], 250);
                 __delay_ms(20);
@@ -216,7 +216,7 @@ int main(void)
         //Current last note: Finished
 
         if(BUTTON_PRESSED(3)) {
-            JingleBell(2);
+            JingleBell(1);
         }
 
         // Add a short delay to the main while loop.
