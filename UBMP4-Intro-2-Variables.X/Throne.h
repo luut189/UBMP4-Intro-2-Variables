@@ -3,7 +3,6 @@
 #define LED_OFF(n)          LED##n = 0
 
 void NOTE_PLAYER(long, int);
-void DELAY(long);
 
 #define ND4     1702
 #define B4      1012

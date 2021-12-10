@@ -125,10 +125,13 @@ int main(void)
 
         int jingle_bell_2[6] = {B4, B4, B4, B4, B4, B4};
 
-        int jingle_bell_3[13] = {B4, D5, G4, A4, B4,
-                                C5, C5, C5, C5, C5, B4, B4, B4};
+        int jingle_bell_3[19] = {B4, D5, G4, A4, B4,
+                                C5, C5, C5, C5, C5, B4, B4, B4,
+                                B4, A4, A4, B4, A4, D5};
 
-        //Current last note: Line 3, Part 3, Last note
+        int jingle_bell_4[5] = {D5, D5, C5, A4, G4};
+
+        //Current last note: Finished
 
         if(BUTTON_PRESSED(3)) {
             for(char i = 0; i < 20; i++) {
@@ -145,14 +148,45 @@ int main(void)
                 }
             }
             __delay_ms(200);
+
             NOTE_PLAYER(jingle_bell_2[0], 250);
             __delay_ms(10);
             NOTE_PLAYER(jingle_bell_2[1], 250);
             __delay_ms(30);
-
             NOTE_PLAYER(jingle_bell_2[2], 350);
             __delay_ms(50);
+            NOTE_PLAYER(jingle_bell_2[3], 250);
+            __delay_ms(10);
+            NOTE_PLAYER(jingle_bell_2[4], 250);
+            __delay_ms(30);
+            NOTE_PLAYER(jingle_bell_2[5], 350);
+            for(char i = 0; i < 19; i++) {
+                if(i < 4) NOTE_PLAYER(jingle_bell_3[i], 250);
+                else if(i == 4) NOTE_PLAYER(jingle_bell_3[i], 350);
+                else if(i > 4 && i < 9) {
+                    NOTE_PLAYER(jingle_bell_3[i], 250);
+                    __delay_ms(20);
+                } else if(i > 9 && i < 13) {
+                    NOTE_PLAYER(jingle_bell_3[i], 250);
+                    __delay_ms(20);
+                } else if(i > 12 && i < 17) {
+                    if(i == 13 || i == 16) NOTE_PLAYER(jingle_bell_3[i], 250);
+                    else if(i > 13 && i < 16) {
+                        NOTE_PLAYER(jingle_bell_3[i], 250);
+                        __delay_ms(20);
+                    } 
+                } else if(i >= 17) {
+                    NOTE_PLAYER(jingle_bell_3[i], 350);
+                }
+            }
+            __delay_ms(200);
 
+            NOTE_PLAYER(jingle_bell_2[0], 250);
+            __delay_ms(10);
+            NOTE_PLAYER(jingle_bell_2[1], 250);
+            __delay_ms(30);
+            NOTE_PLAYER(jingle_bell_2[2], 350);
+            __delay_ms(50);
             NOTE_PLAYER(jingle_bell_2[3], 250);
             __delay_ms(10);
             NOTE_PLAYER(jingle_bell_2[4], 250);
@@ -169,6 +203,13 @@ int main(void)
                     __delay_ms(20);
                 }
             }
+            for(char i = 0; i < 5; i++) {
+                if(i < 2) {
+                    NOTE_PLAYER(jingle_bell_4[i], 250);
+                    __delay_ms(20);
+                } else if(i > 1 && i < 4) NOTE_PLAYER(jingle_bell_4[i], 250);
+                else if(i == 4) NOTE_PLAYER(jingle_bell_4[i], 350);
+            } 
         }
 
         // Add a short delay to the main while loop.
