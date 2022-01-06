@@ -47,6 +47,7 @@ int jingle_bell_3[19] = {B4, D5, G4, A4, B4,
 
 int jingle_bell_4[5] = {D5, D5, C5, A4, G4};
 
+// Hide this if you don't want to see a mess
 void JingleBell(unsigned char loop) {
     for(unsigned char c = loop; c != 0; c--) {
         for(unsigned char i = 0; i < 20; i++) {
@@ -138,7 +139,7 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-       /*
+       /* Question 1
         if(SW2 == 0 && !SW2Pressed) {
             SW2Pressed = true;
             LED3 = 1;
@@ -173,7 +174,7 @@ int main(void)
         }
         */
         
-        /*
+        /* Question 2
         if(SW2 == 0 && !SW2Pressed) {
             LED3 = 1;
             SW2Pressed = true;
@@ -183,7 +184,7 @@ int main(void)
         }
         */
 
-        /*
+        /* Question 3
         if(SW2 == 0) {
             LED3 = 1;
             __delay_ms(1000);
@@ -202,25 +203,26 @@ int main(void)
         }
         */
 
-        // if(!SW2Pressed && SW2 == 0) {
-        //     SW2Pressed = true;
-        //     LED2 = !LED2;
-        //     __delay_ms(50);
-        // }
+        /* Test bouncing
+        if(!SW2Pressed && SW2 == 0) {
+            SW2Pressed = true;
+            LED2 = !LED2;
+            __delay_ms(50);
+        }
         
-        // if(SW2Pressed && SW2 == 1) {
-        //     SW2Pressed = false;
-        //     __delay_ms(50);
-        // }
+        if(SW2Pressed && SW2 == 1) {
+            SW2Pressed = false;
+            __delay_ms(50);
+        }
+        */
 
         //Current last note: Finished
-
         if(BUTTON_PRESSED(3)) {
             JingleBell(1);
         }
 
         // Add a short delay to the main while loop.
-        
+        __delay_ms(10);
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
         {
@@ -417,5 +419,5 @@ int main(void)
  *    multi-function button that could be implemented to make your program
  *    ignore switch bounces. Multiple switch activations within a 50ms time span
  *    might indicate switch bounce and can be safely ignored.
- *    We can prevent that by adding a delay, I guess.
+ *    We can prevent that by adding a delay, like it was added at the start.
  */
