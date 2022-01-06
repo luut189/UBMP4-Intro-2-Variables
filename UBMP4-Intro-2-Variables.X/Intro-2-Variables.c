@@ -23,10 +23,14 @@
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
 
 // Program constant definitions
-const unsigned char maxCount = 50;
+const unsigned char maxCount = 5;
 
 // Program variable definitions
 bool SW2Pressed = false;
+bool SW5Pressed = false;
+unsigned char SW2Count = 0;
+unsigned char SW5Count = 0;
+
 unsigned char count = 0;
 
 int jingle_bell[20] = {ND4, B4, A4, G4, ND4,
@@ -139,12 +143,12 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-       /* Question 1
+        /* Question 1
         if(SW2 == 0 && !SW2Pressed) {
             SW2Pressed = true;
             LED3 = 1;
             SW2Count++;
-        } else {
+        } else if(SW2 != 0) {
             LED3 = 0;
             SW2Pressed = false;
         }
@@ -153,14 +157,14 @@ int main(void)
             SW5Pressed = true;
             LED6 = 1;
             SW5Count++;
-        } else {
+        } else if(SW5 != 0) {
             LED6 = 0;
             SW5Pressed = false;
         }
 
-        if(SW2Count >= maxCount) {
+        if(SW2Count >= maxCount && !(SW5Count >= maxCount)) {
             LED4 = 1;
-        } else if(SW5Count >= maxCount) {
+        } else if(SW5Count >= maxCount && !(SW2Count >= maxCount)) {
             LED5 = 1;
         }
 
@@ -176,10 +180,9 @@ int main(void)
         
         /* Question 2
         if(SW2 == 0 && !SW2Pressed) {
-            LED3 = 1;
+            LED3 = !LED3;
             SW2Pressed = true;
-        } else if(SW2 == 0 && SW2Pressed) {
-            LED3 = 0;
+        } else if(SW2 != 0) {
             SW2Pressed = false;
         }
         */
